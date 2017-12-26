@@ -7,13 +7,17 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(defonce app-state (atom {:text "Hello world!"}))
+(defonce app-state (atom {:scene []}))
 
+(def init-scene
+  [:a-scene
+   [:a-box {:position "-1 2.5 -3"
+            :rotation "0 45 0"
+            :color "#4CC3D9"}]])
 
 (defn hello-world []
   [:div
-   [:h1 (:text @app-state)]
-   [:h3 "Edit this and watch it change!"]])
+   (:scene @app-state)])
 
 (reagent/render-component [hello-world]
                           (. js/document (getElementById "app")))
@@ -22,4 +26,6 @@
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
+
+  (swap! app-state #(assoc % :scene init-scene))
 )
