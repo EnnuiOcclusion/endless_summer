@@ -1,4 +1,4 @@
-(ns endless-summer-aframe.core
+(ns endless-summer.core
   (:require [reagent.core :as reagent :refer [atom]]))
 
 (enable-console-print!)
@@ -26,9 +26,8 @@
 (defn spin
   ([duration to]
    [:a-animation
-    {:attribute "rotation"
-     :dur duration
-     :direction "alternate"
+    {:attribute "rotation" :dur duration
+     :direction "forward"
      :easing "linear"
      :to to
      :repeat "indefinite"}]))
@@ -58,11 +57,11 @@
 (defn register-component
   [component-name init-function]
   (js/AFRAME.registerComponent component-name
-                               #js {"init" init-function}))
+                               #js {:init init-function}))
 
 (def init-scene
   [:a-scene#scene {:onClick user-click
-                   :physics "debug: true;"}
+                   :physics "debug: false;"}
    [:a-entity (map-to-string-map {:camera {:user-height 1.6}
                                   :look-controls {:enabled true}
                                   :wasd-controls {:enabled false}})]
@@ -79,9 +78,9 @@
                      :color "#7BC8A4"}
     #_[:a-torus {:position "0 10 4"
                :rotation "90 0 0"}]]
-   [:a-entity (map-to-string-map {:environment {:preset "forest"}})]])
+   [:a-entity (map-to-string-map {:environment {:preset "tron"}})]])
 
-(defn hello-world []
+(defn scene-template []
   [:div
    (:scene @app-state)])
 
@@ -109,7 +108,7 @@
 
 (defonce startup (initial-setup))
 
-(reagent/render-component [hello-world]
+(reagent/render-component [scene-template]
                           (. js/document (getElementById "app")))
 (reagent/after-render post-reagent-render)
 

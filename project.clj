@@ -1,11 +1,11 @@
-(defproject endless-summer-aframe "0.1.0-SNAPSHOT"
+(defproject endless-summer "0.1.0-SNAPSHOT"
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  
-  
+
+
   :min-lein-version "2.7.1"
 
   :dependencies [[org.clojure/clojure "1.9.0-beta4"]
@@ -25,16 +25,16 @@
                 ;; The presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel {:on-jsload "endless-summer-aframe.core/on-js-reload"
+                :figwheel {:on-jsload "endless-summer.core/on-js-reload"
                            ;; :open-urls will pop open your application
                            ;; in the default browser once Figwheel has
                            ;; started and compiled your application.
                            ;; Comment this out once it no longer serves you.
                            :open-urls ["http://localhost:3449/index.html"]}
 
-                :compiler {:main endless-summer-aframe.core
+                :compiler {:main endless-summer.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/endless_summer_aframe.js"
+                           :output-to "resources/public/js/compiled/endless_summer.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
@@ -45,8 +45,8 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/endless_summer_aframe.js"
-                           :main endless-summer-aframe.core
+                :compiler {:output-to "resources/public/js/compiled/endless_summer.js"
+                           :main endless-summer.core
                            :optimizations :advanced
                            :pretty-print false}}]}
 
