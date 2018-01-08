@@ -1,5 +1,6 @@
 (ns endless-summer.core
-  (:require [reagent.core :as reagent :refer [atom]]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [endless-summer.entities :as ent]))
 
 (enable-console-print!)
 
@@ -59,12 +60,10 @@
   (js/AFRAME.registerComponent component-name
                                #js {:init init-function}))
 
-(def init-scene
-  [:a-scene#scene {:onClick user-click
-                   :physics "debug: false;"}
-   [:a-entity (map-to-string-map {:camera {:user-height 1.6}
+(def scene
+  [[:a-entity (map-to-string-map {:camera {:user-height 1.6}
                                   :look-controls {:enabled true}
-                                  :wasd-controls {:enabled false}})]
+                                  :wasd-controls {:enabled true}})]
    [:a-sphere#player {"dynamic-body" "mass: 5"
                       :position "0 4 -4"
                       :color "#4CC3D9"}
@@ -75,10 +74,16 @@
                      :rotation "-90 0 0"
                      :width "4"
                      :height "4"
-                     :color "#7BC8A4"}
+                     :visible "false"
+                     }
     #_[:a-torus {:position "0 10 4"
-               :rotation "90 0 0"}]]
-   [:a-entity (map-to-string-map {:environment {:preset "tron"}})]])
+                 :rotation "90 0 0"}]]
+   [:a-entity (map-to-string-map {:environment {:preset "default"}})]])
+
+(def init-scene
+  (apply conj [:a-scene#scene {:onClick user-click
+                         :physics "debug: false;"}]
+        (apply conj (ent/build-scene ent/sands) scene)))
 
 (defn scene-template []
   [:div
@@ -99,12 +104,11 @@
   (swap! app-state #(assoc % :scene init-scene)))
 
 (defn initial-setup []
-  (init-app-state)
-  )
+  (init-app-state))
 
 (defn post-reagent-render []
-  (let [scene (query-for-object "#scene")]
-    (. scene addEventListener "loaded" #(setup-physics))))
+  (let [ground (query-for-object "#ground")]
+    (. ground addEventListener "body-loaded" #(setup-physics))))
 
 (defonce startup (initial-setup))
 

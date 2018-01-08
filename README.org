@@ -1,6 +1,14 @@
 * Overview
+  
+This is an experimental game engine written in ClojureScript using A-Frame for rendering.
 
-Trying this again, but putting everything I've learned into practice. Last go around I realized I finally got all of my grand abstractions working and I'd just ended making a bespoke A-Frame. So let's try building this again, but with A-Frame as our framework we're targeting with our Clojurescript, instead of Three.js.
+To build, just run:
+
+#+BEGIN_SRC bash
+  lein figwheel
+#+END_SRC
+
+Last go around I realized I finally got all of my grand abstractions working and I'd just ended making a bespoke A-Frame. So let's try building this again, but with A-Frame as our framework we're targeting with our Clojurescript, instead of Three.js.
 
 * Creation
 
